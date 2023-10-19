@@ -1,3 +1,5 @@
+import { LazyLoadImage } from "react-lazy-load-image-component"
+
 const ProductCard = ({ productData }) => {
     // productdata example:
     // {
@@ -18,12 +20,13 @@ const ProductCard = ({ productData }) => {
                 <div className="card shadow-0 border rounded-3">
                     <div className="row no-gutters d-flex justify-content-center align-items-center">
                         <div className="col-lg-3 col-md-12 col-xs-3">
-                            <img style={{objectFit: "scale-down", height: "300px", margin:"5px"}} src={productData.image} className="card-img img-fluid" alt="..."></img>
+                            <LazyLoadImage style={{objectFit: "scale-down", maxHeight: "200px", maxWidth: "200px", margin:"5px"}} src={productData.image} className="card-img img-fluid" alt="..." />
+                            {/* <img style={{objectFit: "scale-down", maxHeight: "200px", maxWidth: "200px", margin:"5px"}} src={productData.image} className="card-img img-fluid" alt="..."></img> */}
                         </div>
                         <div className="col-lg-6 col-md-6 col-xs-6">
                             <div className="card-body">
                                 <h5 className="card-title">{productData.title}</h5>
-                                <p className="card-text truncate-text">{productData.description}</p>
+                                <p className="card-text text-truncate">{productData.description}</p>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 col-xs-3 border-sm-start-none border-start">

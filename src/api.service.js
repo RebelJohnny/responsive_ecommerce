@@ -2,7 +2,8 @@ export const apiService = {
     GetAllProducts,
     GetSingleProduct,
     GetAllCategories,
-    GetProductsInCategory
+    GetProductsInCategory,
+    ImageBlobber
 }
 
 async function GetAllProducts() {
@@ -23,4 +24,8 @@ async function GetAllCategories(){
 async function GetProductsInCategory(category) {
     const res = await fetch(`https://fakestoreapi.com/products/category/${category}`)
     return await res.json()
+}
+
+async function ImageBlobber(url){
+    return await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "image", { type: "image/png" }))
 }
