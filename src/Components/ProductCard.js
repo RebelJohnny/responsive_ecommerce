@@ -1,3 +1,4 @@
+import { Rating } from "@mui/material"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 
 const ProductCard = ({ productData }) => {
@@ -20,21 +21,23 @@ const ProductCard = ({ productData }) => {
                 <div className="card shadow-0 border rounded-3">
                     <div className="row no-gutters d-flex justify-content-center align-items-center">
                         <div className="col-lg-3 col-md-12 col-xs-3">
-                            <LazyLoadImage style={{objectFit: "scale-down", maxHeight: "200px", maxWidth: "200px", margin:"5px"}} src={productData.image} className="card-img img-fluid" alt="..." />
+                            <LazyLoadImage style={{ objectFit: "scale-down", maxHeight: "200px", maxWidth: "200px", margin: "5px" }} src={productData.image} className="card-img img-fluid" alt="..." />
                             {/* <img style={{objectFit: "scale-down", maxHeight: "200px", maxWidth: "200px", margin:"5px"}} src={productData.image} className="card-img img-fluid" alt="..."></img> */}
                         </div>
                         <div className="col-lg-6 col-md-6 col-xs-6">
                             <div className="card-body">
                                 <h5 className="card-title">{productData.title}</h5>
+                                <div class="d-flex flex-row justify-content-center">
+                                    <Rating name="half-rating-read" defaultValue={productData.rating.rate} precision={0.1} readOnly />
+                                    <span className="text-danger">{productData.rating.count}</span>
+                                </div>
                                 <p className="card-text text-truncate">{productData.description}</p>
                             </div>
                         </div>
                         <div className="col-lg-3 col-md-6 col-xs-3 border-sm-start-none border-start">
-                            <div className="d-flex flex-row align-items-center justify-content-center mb-1">
+                            <div className="d-flex flex-column align-items-center justify-content-center mb-1">
                                 <h4 className="mb-1 me-1">${productData.price}</h4>
-                            </div>
-                            <div className="d-flex flex-column mt-4">
-                                <button className="btn btn-primary btn-sm" type="button">Details</button>
+                                <button className="btn btn-primary btn-md" type="button">Details</button>
                             </div>
                         </div>
                     </div>

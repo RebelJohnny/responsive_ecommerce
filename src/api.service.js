@@ -3,6 +3,8 @@ export const apiService = {
     GetSingleProduct,
     GetAllCategories,
     GetProductsInCategory,
+    GetSortedProducts,
+    GetSortedProductsInCategory,
     ImageBlobber
 }
 
@@ -23,6 +25,16 @@ async function GetAllCategories(){
 
 async function GetProductsInCategory(category) {
     const res = await fetch(`https://fakestoreapi.com/products/category/${category}`)
+    return await res.json()
+}
+
+async function GetSortedProducts(sort) {
+    const res = await fetch(`https://fakestoreapi.com/products?sort=${sort}`)
+    return await res.json()
+}
+
+async function GetSortedProductsInCategory(category, sort) {
+    const res = await fetch(`https://fakestoreapi.com/products/category/${category}?sort=${sort}`)
     return await res.json()
 }
 
