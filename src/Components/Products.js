@@ -1,14 +1,13 @@
 import { Suspense, lazy, useEffect, useState } from "react"
 import { apiService } from "../api.service"
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Skeleton } from '@mui/material';
+import Filters from "./Filters";
 
 
 const ProductCard = lazy(() => import('./ProductCard.js'))
 
 const Products = () => {
     const [products, setProducts] = useState([])
-    const [categories, setCategories] = useState([])
-    console.log(categories)
     const [selectedCategory, setSelectedCategory] = useState("none");
     const [sorting, setSorting] = useState("none");
     const [loading, setLoading] = useState(false)
@@ -25,15 +24,7 @@ const Products = () => {
             })
     }
 
-    const GetCategoriesData = () => {
-        apiService.GetAllCategories()
-            .then((res) => {
-                setCategories(res);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
+
 
     const GetProductsInCategory = (category) => {
         apiService.GetProductsInCategory(category)
@@ -67,7 +58,6 @@ const Products = () => {
 
     useEffect(() => {
         GetProductsData();
-        GetCategoriesData();
     }, []);
 
     useEffect(() => {
@@ -82,6 +72,14 @@ const Products = () => {
         }
     }, [selectedCategory, sorting])
 
+    const GetCategoryFilter = (category) => {
+        setSelectedCategory(category)
+    }
+
+    const GetSortFilter = (sort) => {
+        setSorting(sort)
+    }
+
     return (
         <>
             {loading ? (
@@ -89,44 +87,14 @@ const Products = () => {
                     <CircularProgress />
                 </Box>
             ) : (
-                <>
-                    <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'left' }}>
-                        <FormControl sx={{ m: 1, minWidth: { xs: 150, sm: 200 } }}>
-                            <InputLabel>Category</InputLabel>
-                            <Select
-                                id="simple-select"
-                                value={selectedCategory}
-                                label="Category"
-                                onChange={(e) => setSelectedCategory(e.target.value)}
-                            >
-                                <MenuItem key={-1} value={"none"}>None</MenuItem>
-                                {categories?.map((val, index) => (
-                                    <MenuItem key={index} value={val}>{val}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                        <FormControl sx={{ m: 1, minWidth: { xs: 150, sm: 200 } }}>
-                            <InputLabel>Sort</InputLabel>
-                            <Select
-                                label="Sort"
-                                value={sorting}
-                                onChange={(e) => setSorting(e.target.value)}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                                <MenuItem value='none'>None</MenuItem>
-                                <MenuItem value='asc'>Ascending</MenuItem>
-                                <MenuItem value='desc'>Descending</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
+                <div className="row justify-content-center">                        
+                        <Filters selectedCategory={selectedCategory} SetCategoryFilter={GetCategoryFilter} selectedSort={sorting} SetSortFilter={GetSortFilter} />
                     {products.map((product) => (
                         <Suspense fallback={<Skeleton variant="rectangular" width={210} height={118} />} key={product.id}>
                             <ProductCard productData={product} />
                         </Suspense>
                     ))}
-                </>
+                </div>
             )}
         </>
     )

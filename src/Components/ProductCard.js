@@ -19,17 +19,18 @@ const ProductCard = ({ productData }) => {
     // }
     const modalStyle = {
         position: 'absolute',
-        top: '50%',
-        // left: '50%',
-        transform: 'translate(50%, -50%)',
-        width: 600,
+        top: '10%',
+        left: '10%',
+        // transform: 'translate(50%, -50%)',
+        width: "80vw",
+        maxHeight: "80vh",
         border: '1px solid #eee',
         boxShadow: 24,
+
     }
     const [openDetails, setOpenDetails] = useState(false)
     return (
         <>
-            <div className="row justify-content-center mb-3">
                 <div className="col-md-12 col-xl-10 col-xs-10">
                     <div className="card shadow-0 border rounded-3">
                         <div className="row no-gutters d-flex justify-content-center align-items-center">
@@ -56,7 +57,6 @@ const ProductCard = ({ productData }) => {
                         </div>
                     </div>
                 </div>
-            </div>
             <Modal
             open={openDetails}
             onClose={() => setOpenDetails(false)}
